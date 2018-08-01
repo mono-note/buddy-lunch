@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  color: #333;
+  font-size: 18px;
+  background: #fff;
+  overflow-x: hidden; 
+  font-family: "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
+}
+.container {
+  width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.width50 {
+  width: 50%;
+}
+.flexitem {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul li {
+  padding: 5px 0;
+}
+ul li:nth-child(2n) {
+  background: #fff
+}
+ul li:nth-child(2n + 1) {
+  background: rgba(116, 185, 255,1.0)
+}
+
+.box-spin{
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  display: none;
+}
+.loader {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid #3498db;
+  border-right: 10px solid #2ecc71;
+  border-bottom: 10px solid #e74c3c;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  cursor: pointer;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.btn-info {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
