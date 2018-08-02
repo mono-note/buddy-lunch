@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
-import myData from "./buddy_Thai.json";
-import  fireDatabase from "./Firebase";
+import  fireDatabase from "./Firebase/Firebase";
+import DataSync from "./Firebase/DataSync"
 let modifyedMember = [];
 let groupA = [];
 let groupB = [];
 let checkPastBuddyFlg = true;
 let firebaseData
 const timeWait = 400
-let monthOf
 class App extends Component {
   constructor() {
     super();
@@ -21,31 +20,22 @@ class App extends Component {
       countTo:0
     };    
   }
-  componentWillMount() {    
-    const data = fireDatabase.ref()
 
-
-    data.once("value", snap => {
-      firebaseData =snap.val()
-    }, error => {
-      console.log(`Error: ${error.code}`);
-    }).then( ()=>{
+  componentWillMount() {
+    DataSync().then((result) => {
+      firebaseData = result.val()
       this.setState({btnState:false,showSpin:false})
       this.adjustJson();
-      console.log('done')
-    });
-    
+    }).catch((err) => console.log(err))
   }
-
   adjustJson = () => {
     this.monthOf = 'month'+(Object.keys(firebaseData[0]).length )
-    console.log(this.monthOf)
     for (let n of firebaseData) {
       let person = {};
       let pastBuddy = [];
       person.name = n.name;
       // Object.keys(n).length
-      Object.keys(n).forEach((key,val) => {
+      Object.keys(n).forEach((key) => {
         if (key !== "name") {
           pastBuddy.push(n[key]);
         }        
@@ -84,7 +74,7 @@ class App extends Component {
     }
     this.setState({groupA,groupB});
   };
-  checkPastBuddy = s => {
+  checkPastBuddy = () => {
     let n = groupA.length;
     while (n) {
       n--;
@@ -92,9 +82,7 @@ class App extends Component {
       while (m) {
         m--;
         if (groupA[n].pastBuddy[m] === groupB[n].name) {
-          console.log(
-            groupA[n].name + " and " + groupB[n].name + " were pastbuddy"
-          );
+          console.log(groupA[n].name + " and " + groupB[n].name + " were pastbuddy");
           return false;
         }
       }
@@ -173,7 +161,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Buddy Launch Generator</h1>
         </header>
         <p className="App-intro">
-          That random the couple will going to eat lunch or dinner together.
+          That random the couple will going eat lunch together.
         </p>
         <div className="container">
           <div className="row">
