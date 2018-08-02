@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DataSync from "./Firebase/DataSync"
 let firebaseData;
-let totalMonth = 0;
+let member = []
 export class ShowMember extends Component {
   constructor() {
     super();
@@ -14,36 +14,59 @@ export class ShowMember extends Component {
   componentWillMount() {
     DataSync().then((result) => {
       firebaseData = result.val()
-      this.setState({btnState:false,showSpin:false})      
-       this.setState({data:firebaseData})
+      this.setState({showSpin:false})
        this.totalMonth = (Object.keys(firebaseData[0]).length -1)
-       console.log(firebaseData)
+       firebaseData.forEach((k, v) => {
+         let buddy =[]
+         for (var key in k) {
+           if (k.hasOwnProperty(key) && key !== 'name') {
+             buddy.push(k[key])
+           }
+         }
+         member.push({
+          'name':k.name,
+          'buddy':buddy
+         })
+       })       
+       this.setState({data:member})
+       //console.log(firebaseData)
     }).catch((err) => console.log(err))
   }
+
   render() {
     return (
       <div>
         <div className="box-spin" style={{display: this.state.showSpin ? 'flex' : 'none' }}>
           <div className="loader"></div>
         </div>
-        <Gendata target={this.state.data}/>
+        <ListName target={this.state.data}/>
         <h1 className="box-spin" style={{display: this.state.showSpin ? 'none' : 'block' }}>member </h1>
       </div>
     )
   }
 }
-function Gendata(props) {
+function ListName(props) {
+  if(props.target.length === 22){
   return (
     <ul>
       {props.target.map(
         (data, key) => 
         <li key={key}>
-          {data.name}
-          ##{data.month1}
-          ##{data.month2}
+        {data.name}
+        <ListBuddy buddy={data.buddy}/>
         </li>
       )}
     </ul>
+  );}
+  return <div></div>
+}
+function ListBuddy(props) {
+  return (
+  <div>
+    {props.buddy.map((data,index) => 
+    <span key={index}>-{data}<br/></span>)}
+  </div>
   );
 }
+
 export default ShowMember
