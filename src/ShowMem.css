@@ -1,0 +1,9 @@
+ul li {
+  padding: 0px 0;
+}
+ul li:nth-child(2n) {
+  background: #fff
+}
+ul li:nth-child(2n + 1) {
+  background: rgba(116, 185, 255,1.0)
+}

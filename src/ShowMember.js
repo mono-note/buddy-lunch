@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import DataSync from "./Firebase/DataSync"
+import "./ShowMem.css";
 let firebaseData;
 let member = []
 export class ShowMember extends Component {
@@ -52,7 +53,7 @@ function ListName(props) {
       {props.target.map(
         (data, key) => 
         <li key={key}>
-        {data.name}
+        <div>{data.name}</div>
         <ListBuddy buddy={data.buddy}/>
         </li>
       )}
